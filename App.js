@@ -1,17 +1,32 @@
-import React, { View, Text } from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions'
+
 import HomeScreen from "./screens/HomeScreen";
 import NewDeckScreen from './screens/NewDeckScreen'
 import DeckScreen from "./screens/DeckScreen";
 import NewCardScreen from "./screens/NewCardScreen";
 import QuizScreen from "./screens/QuizScreen";
+
 import { colors } from './styles'
 
 const Stack = createStackNavigator();
 
 
 export default function App() {
+
+  const [permission, askForPermission] = Permissions.usePermissions(Permissions.NOTIFICATIONS, { ask: true });
+
+  useEffect(() => {
+    if (permission && permission.status === 'granted') {
+
+    }
+    else askForPermission()
+
+  }, [])
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -50,7 +65,16 @@ export default function App() {
             }
           }}
           component={NewCardScreen} />
-        <Stack.Screen name="Quiz" component={QuizScreen} />
+        <Stack.Screen name="Quiz"
+          options={({ route }) => (
+            {
+              title: "Quiz: " + route.params.deck.title,
+              headerStyle: {
+                backgroundColor: colors.accent,
+              }
+            }
+          )}
+          component={QuizScreen} />
       </Stack.Navigator>
     </NavigationContainer>)
 }

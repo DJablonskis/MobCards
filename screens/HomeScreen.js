@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { getDecks } from '../API'
+import ListDivider from '../components/ListDivider';
+import { getDecks, getAllNotifications, cancelAllNotifications, sheduleNotifications, getNextTriggerDate } from '../API'
 import Deck from '../components/Deck'
 import RoundedButton from '../components/RoundedButton'
 import { colors } from '../styles'
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import ListDivider from '../components/ListDivider';
-const STORAGE_KEY = '@decks'
+
 
 const HomeScreen = ({ navigation }) => {
     const [decks, setDecks] = useState({})
@@ -35,7 +35,6 @@ const HomeScreen = ({ navigation }) => {
         }
     }
 
-
     return (
         <View style={style.container}>
 
@@ -49,6 +48,10 @@ const HomeScreen = ({ navigation }) => {
             <View style={{ paddingHorizontal: 8, backgroundColor: colors.white }}>
                 <RoundedButton value="Add deck" onPress={() => navigation.navigate('NewDeck')} color={colors.primary} />
                 <RoundedButton value="Delete decks" onPress={() => ResetDecks()} color={colors.danger} />
+                <RoundedButton value="get notifications" onPress={() => getAllNotifications().then((a) => alert(JSON.stringify(a)))} color={colors.danger} />
+                <RoundedButton value="delete notifications" onPress={() => cancelAllNotifications().then(alert("Done!"))} color={colors.danger} />
+                <RoundedButton value="Shedule notifications" onPress={() => sheduleNotifications().then(alert("Done!"))} color={colors.danger} />
+                <RoundedButton value="Get next notification date" onPress={() => getNextTriggerDate().then(alert)} color={colors.danger} />
             </View>
 
 

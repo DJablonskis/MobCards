@@ -1,50 +1,42 @@
 import React, { useState } from 'react'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+
 import { addNewCard } from '../API'
 import RoundedButton from '../components/RoundedButton'
-import { colorPrimary, colorSecondary, colorDanger, colorAccent } from '../styles'
+import StyledInput from '../components/StyledInput'
+import { colors } from '../styles'
 
 const NewCardScreen = ({ navigation, route }) => {
     const [question, setQuestion] = useState("")
     const [answer, setAnswer] = useState("")
+    const deckName = route.params.name
 
     const onSubmit = () => {
-        addNewCard(route.params.id, { question, answer }).then(navigation.goBack())
+        if (question.trim() !== "" && answer.trim() !== "") {
+            addNewCard(route.params.id, { question, answer }).then(navigation.goBack())
+        } else {
+            alert("Question and answer can not be empty!")
+        }
     }
 
     return (
-        <View style={{ flex: 1, alignItems: 'center' }}>
-            <Text style={styles.title}>Question:</Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={text => setQuestion(text)}
-                value={question}
-            />
-            <Text style={styles.title}>Answer:</Text>
-            <TextInput
-                style={styles.input}
-                onChangeText={text => setAnswer(text)}
-                value={answer}
-            />
-            <RoundedButton value="Add new card" color={colorPrimary} onPress={() => onSubmit()} />
+        <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 10 }}>
+            <Text style={styles.title}>Adding new question card to '{deckName}' deck</Text>
+            <StyledInput placeHolder="Question" onChange={setQuestion} />
+            <StyledInput placeHolder="Answer" onChange={setAnswer} />
+            <RoundedButton value="Add new card" color={colors.primary} onPress={() => onSubmit()} />
         </View>
     )
 }
 
 const styles = StyleSheet.create({
-    input: {
-        width: '90%',
-        borderColor: colorAccent,
-        borderWidth: 4,
-        borderRadius: 50,
-        margin: 4,
-        paddingHorizontal: 16
-    },
     title: {
+        color: colors.primary,
+        textAlign: 'center',
         fontWeight: 'bold',
-        fontSize: 16,
-        margin: 6
-    }
+        fontSize: 32,
+        marginBottom: 16
+    },
 })
 
 export default NewCardScreen

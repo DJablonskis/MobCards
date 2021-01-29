@@ -4,20 +4,27 @@ import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
 import { addNewDeck } from '../API'
 import { colors } from '../styles'
 import RoundedButton from '../components/RoundedButton'
+import StyledInput from '../components/StyledInput'
 
 
 const NewDeckScreen = ({ navigation }) => {
     const [value, setValue] = useState("")
 
     const onSubmit = () => {
-        addNewDeck(value).then(() => navigation.goBack())
+        if (value.trim() !== "") {
+            addNewDeck(value).then(id => {
+                navigation.replace("Deck", { id })
+            })
+        }
+        else {
+            alert("The deck name can not be empty!")
+        }
     }
 
     return (
         <View style={{ flex: 1, paddingHorizontal: 10, justifyContent: 'center' }}>
             <Text style={styles.title}>Give your new deck a name</Text>
-            <TextInput placeholder="Deck name"
-                style={styles.input} onChangeText={text => setValue(text)}
+            <StyledInput placeholder="Deck name" onChange={setValue}
                 value={value}
             />
             <RoundedButton value="Create" onPress={() => onSubmit()} color={colors.primary} />
