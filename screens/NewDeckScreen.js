@@ -24,7 +24,7 @@ const NewDeckScreen = ({ navigation }) => {
     return (
         <View style={{ flex: 1, paddingHorizontal: 10, justifyContent: 'center' }}>
             <Text style={styles.title}>Give your new deck a name</Text>
-            <StyledInput placeholder="Deck name" onChange={setValue}
+            <StyledInput placeHolder="Deck name" onChange={setValue}
                 value={value}
             />
             <RoundedButton value="Create" onPress={() => onSubmit()} color={colors.primary} />

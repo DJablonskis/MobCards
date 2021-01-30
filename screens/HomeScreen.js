@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ListDivider from '../components/ListDivider';
-import { getDecks, getAllNotifications, cancelAllNotifications, sheduleNotifications, getNextTriggerDate } from '../API'
+import { getDecks, getAllNotifications, cancelAllNotifications, scheduleNotifications, getNextTriggerDate } from '../API'
 import Deck from '../components/Deck'
 import RoundedButton from '../components/RoundedButton'
 import { colors } from '../styles'
@@ -48,10 +48,12 @@ const HomeScreen = ({ navigation }) => {
             <View style={{ paddingHorizontal: 8, backgroundColor: colors.white }}>
                 <RoundedButton value="Add deck" onPress={() => navigation.navigate('NewDeck')} color={colors.primary} />
                 <RoundedButton value="Delete decks" onPress={() => ResetDecks()} color={colors.danger} />
-                <RoundedButton value="get notifications" onPress={() => getAllNotifications().then((a) => alert(JSON.stringify(a)))} color={colors.danger} />
-                <RoundedButton value="delete notifications" onPress={() => cancelAllNotifications().then(alert("Done!"))} color={colors.danger} />
-                <RoundedButton value="Shedule notifications" onPress={() => sheduleNotifications().then(alert("Done!"))} color={colors.danger} />
-                <RoundedButton value="Get next notification date" onPress={() => getNextTriggerDate().then(alert)} color={colors.danger} />
+
+
+
+                {/* <RoundedButton value="get notifications" onPress={() => getAllNotifications().then((a) => alert(JSON.stringify(a)))} color={colors.danger} /> */}
+                {/* <RoundedButton value="delete notifications" onPress={() => cancelAllNotifications().then(alert("Done!"))} color={colors.danger} /> */}
+                {/* <RoundedButton value="Shedule notifications" onPress={() => scheduleNotifications().then(alert("Done!"))} color={colors.danger} /> */}
             </View>
 
 

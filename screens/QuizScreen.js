@@ -6,6 +6,7 @@ import { View, Text } from 'react-native'
 import QuizCard from '../components/QuizCard'
 import RoundedButton from '../components/RoundedButton'
 import { colors } from '../styles'
+import { scheduleNotifications } from '../API'
 
 const QuizScreen = ({ route }) => {
 
@@ -19,6 +20,10 @@ const QuizScreen = ({ route }) => {
             setScore(score + 1)
         }
         setPage(page + 1)
+        if (page === cards.length - 1) {
+            //END OFF QUIZ, UPDATING NOTIFICATION
+            scheduleNotifications()
+        }
     }
 
     const reset = () => {

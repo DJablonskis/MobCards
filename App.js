@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
-import * as Notifications from 'expo-notifications';
-import * as Permissions from 'expo-permissions'
 
 import HomeScreen from "./screens/HomeScreen";
 import NewDeckScreen from './screens/NewDeckScreen'
@@ -11,19 +9,20 @@ import NewCardScreen from "./screens/NewCardScreen";
 import QuizScreen from "./screens/QuizScreen";
 
 import { colors } from './styles'
+import { notificationsInitialised, scheduleNotifications } from './API'
 
 const Stack = createStackNavigator();
 
 
 export default function App() {
 
-  const [permission, askForPermission] = Permissions.usePermissions(Permissions.NOTIFICATIONS, { ask: true });
-
   useEffect(() => {
-    if (permission && permission.status === 'granted') {
-
-    }
-    else askForPermission()
+    notificationsInitialised().then((set) => {
+      console.log("Identifier found?", set)
+      if (!set) {
+        scheduleNotifications()
+      }
+    })
 
   }, [])
 
@@ -32,49 +31,31 @@ export default function App() {
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen}
           options={{
-            headerStyle: {
-              backgroundColor: colors.accent,
-            },
+            headerStyle: { backgroundColor: colors.accent, },
             title: "Available decks"
           }}
         />
-        <Stack.Screen
-          name="NewDeck"
-          component={NewDeckScreen}
+        <Stack.Screen name="NewDeck" component={NewDeckScreen}
           options={{
-            headerStyle: {
-              backgroundColor: colors.accent,
-            },
+            headerStyle: { backgroundColor: colors.accent, },
             title: "Add new deck"
           }} />
-        <Stack.Screen
-          name="Deck"
-          component={DeckScreen}
+        <Stack.Screen name="Deck" component={DeckScreen}
           options={{
-            headerStyle: {
-              backgroundColor: colors.accent,
-            },
+            headerStyle: { backgroundColor: colors.accent, },
             title: "Deck review"
-          }}
-        />
-        <Stack.Screen name="NewCard"
+          }} />
+        <Stack.Screen name="NewCard" component={NewCardScreen}
           options={{
             title: "New card",
-            headerStyle: {
-              backgroundColor: colors.accent
-            }
-          }}
-          component={NewCardScreen} />
-        <Stack.Screen name="Quiz"
-          options={({ route }) => (
-            {
-              title: "Quiz: " + route.params.deck.title,
-              headerStyle: {
-                backgroundColor: colors.accent,
-              }
-            }
-          )}
-          component={QuizScreen} />
+            headerStyle: { backgroundColor: colors.accent }
+          }} />
+        <Stack.Screen name="Quiz" component={QuizScreen}
+          options={({ route }) => ({
+            title: "Quiz: " + route.params.deck.title,
+            headerStyle: { backgroundColor: colors.accent, }
+          })}
+        />
       </Stack.Navigator>
     </NavigationContainer>)
 }
