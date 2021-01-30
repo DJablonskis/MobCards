@@ -16,4 +16,4 @@
 - Notifications are set in `App.js` initialy, and then in `QuizScreen.js` everytime you reach end of Quiz
 - Using asyncStorage for data persistance
 - Tested on Android virtual device (Pixel 4 - SDK Q)
-- Not tested on IOS, but no platfor specific code was used and should work on IOS too.
+- Not tested on IOS, but no platform specific code was used and should work on IOS too.
