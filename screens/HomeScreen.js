@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { View, Text, StyleSheet, FlatList } from 'react-native'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ListDivider from '../components/ListDivider';
-import { getDecks, getAllNotifications, cancelAllNotifications, scheduleNotifications, getNextTriggerDate } from '../API'
+import { getDecks, deleteAllDecks } from '../API'
 import Deck from '../components/Deck'
 import RoundedButton from '../components/RoundedButton'
 import { colors } from '../styles'
-
 
 
 const HomeScreen = ({ navigation }) => {
@@ -28,8 +26,7 @@ const HomeScreen = ({ navigation }) => {
 
     const ResetDecks = async () => {
         try {
-            await AsyncStorage.setItem(STORAGE_KEY, "{}")
-            reloadDecks()
+            deleteAllDecks().then(reloadDecks)
         } catch (e) {
             // saving error
         }

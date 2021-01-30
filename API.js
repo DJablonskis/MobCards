@@ -1,7 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 
-const STORAGE_KEY = '@decks'
+export const STORAGE_KEY = '@decks'
 const NOTIFICATION_KEY = '@notifications'
 
 const HOUR = 16
@@ -157,11 +157,19 @@ export const deleteDeck = async (id) => {
             delete parsedDecks[id]
             await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(parsedDecks))
         }
-
     } catch (e) {
         console.error(e)
     }
 }
+
+export const deleteAllDecks = async () => {
+    try {
+        await AsyncStorage.setItem(STORAGE_KEY, "{}")
+    } catch (e) {
+        console.error(e)
+    }
+}
+
 export const addNewDeck = async (title) => {
     const id = ID()
     const newDeck = {

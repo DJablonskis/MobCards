@@ -32,7 +32,7 @@ const DeckScreen = ({ navigation, route }) => {
         deck === null
             ? <Text>Loading</Text>
             : <View style={{ flex: 1 }}>
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
                     <Text style={{ fontSize: 40, textAlign: 'center', fontWeight: 'bold', textTransform: 'uppercase', color: colors.primary }}>{deck.title}</Text>
                     <Text style={{ color: colors.medium, fontSize: 18 }}>{cardCount} question cards</Text>
                     {cardCount < 3 && <Text style={{ color: colors.medium }}>(You need at least 3 cards to start the quiz)</Text>}
