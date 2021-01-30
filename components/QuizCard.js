@@ -4,12 +4,7 @@ import { Text, TouchableOpacity } from 'react-native'
 import { colors } from '../styles'
 
 const QuizCard = (props) => {
-    const { card } = props
-    const [open, setOpen] = useState(false)
-
-    useEffect(() => {
-        setOpen(false)
-    }, [card])
+    const { card, open, setOpen } = props
 
     return (
         <TouchableOpacity style={[{ justifyContent: 'center' }, props.style]} onPress={() => setOpen(!open)}>

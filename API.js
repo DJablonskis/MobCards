@@ -7,10 +7,7 @@ const NOTIFICATION_KEY = '@notifications'
 const HOUR = 16
 const MINUTE = 0
 
-const ID = () => {
-    let str = Date.now().toString(36)
-    return str.substr(2, str.length) + "_" + Math.random().toString(36).substr(2, 9)
-}
+const ID = () => (Date.now().toString(36).substr(2) + "_" + Math.random().toString(36).substr(2, 9))
 
 function setHandler() {
     Notifications.setNotificationHandler({

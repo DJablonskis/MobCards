@@ -35,11 +35,10 @@ const DeckScreen = ({ navigation, route }) => {
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', padding: 16 }}>
                     <Text style={{ fontSize: 40, textAlign: 'center', fontWeight: 'bold', textTransform: 'uppercase', color: colors.primary }}>{deck.title}</Text>
                     <Text style={{ color: colors.medium, fontSize: 18 }}>{cardCount} question cards</Text>
-                    {cardCount < 3 && <Text style={{ color: colors.medium }}>(You need at least 3 cards to start the quiz)</Text>}
-                    {/* <Text>{JSON.stringify(deck)}</Text> */}
+                    {cardCount < 3 && <Text style={{ color: colors.medium }}>(Add few more cards to enjoy the Quiz)</Text>}
                 </ View>
                 <View style={{ paddingHorizontal: 8, paddingBottom: 20 }}>
-                    {cardCount > 2 && <RoundedButton onPress={() => navigation.navigate('Quiz', { deck: deck })} color={colors.primary} value="Start Quiz" />}
+                    <RoundedButton onPress={() => navigation.navigate('Quiz', { deck: deck })} color={colors.primary} value="Start Quiz" />
                     <RoundedButton onPress={() => navigation.navigate('NewCard', { id: deck.id, name: deck.title })} color={colors.secondary} value="new card" />
                     <RoundedButton onPress={() => { deleteDeck(id).then(() => navigation.navigate('Home')) }} color={colors.danger} value="Delete deck" />
                 </View>

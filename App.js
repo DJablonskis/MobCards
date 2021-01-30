@@ -16,6 +16,8 @@ const Stack = createStackNavigator();
 
 export default function App() {
 
+
+  //Checks for set notifications on startup
   useEffect(() => {
     notificationsInitialised().then((set) => {
       console.log("Identifier found?", set)
